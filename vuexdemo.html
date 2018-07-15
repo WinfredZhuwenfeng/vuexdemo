@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>vuexdemo</title>
+</head>
+<body>
+  <div id="app">
+    <brother-a></brother-a>
+    <brother-b></brother-b>
+  </div>
+  <script src="node_modules/vue/dist/vue.js"></script>
+  <script src="node_modules/vuex/dist/vuex.js"></script>
+  <script>
+    const store = new Vuex.Store({
+      state:{
+        count:10
+      },
+      mutations:{
+        increment (state) {
+          state.count++
+        },
+        reduce (state) {
+          state.count--
+        }
+      }
+    })
+    new Vue({
+      el:'#app',
+      components:{
+        brotherA:{
+          data(){
+            return {
+              // count:''
+            }
+          },
+          computed:{
+            count (){
+              return store.state.count
+            }
+          },
+          methods: {
+            increment(){
+              store.commit('increment')
+            }
+          },
+          template:`
+<div>
+  <h1>brotherA{{count}}</h1>
+  <button @click="increment">store+1</button>
+</div>
+          `
+        },
+        brotherB:{
+          data(){
+            return {
+              // count:''
+            }
+          },
+          computed:{
+            count (){
+              return store.state.count
+            }
+          },
+          methods: {
+            reduce(){
+              store.commit('reduce')
+            }
+          },
+          template:`
+<div>
+  <h1>brotherB{{count}}</h1>
+  <button @click="reduce">store-1</button>
+</div>
+          `
+        }
+      }
+    })
+  </script>
+</body>
+</html>
